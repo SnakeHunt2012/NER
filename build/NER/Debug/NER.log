@@ -1,0 +1,27 @@
+﻿生成启动时间为 2013/2/13 20:59:43。
+     1>项目“D:\NER\win32\NER.vcxproj”在节点 2 上(rebuild 个目标)。
+     1>InitializeBuildStatus:
+         正在创建“..\build\NER\Debug\NER.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+       ClCompile:
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D _CRT_SECURE_NO_DEPRECATE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\build\NER\Debug\\" /Fd"..\build\NER\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\ner\IRNE7TypeRecog.cpp ..\src\ner\Model.cpp ..\src\ner\NER_DLL.cpp
+         NER_DLL.cpp
+         Model.cpp
+         IRNE7TypeRecog.cpp
+         正在生成代码...
+       Lib:
+         d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"..\build\NER\Debug\NER.lib" /NOLOGO ..\build\NER\Debug\IRNE7TypeRecog.obj
+         ..\build\NER\Debug\Model.obj
+         ..\build\NER\Debug\NER_DLL.obj
+         NER.vcxproj -> D:\NER\win32\..\build\NER\Debug\NER.lib
+       PostBuildEvent:
+         copy "D:\NER\win32\..\build\NER\Debug\NER.lib" ..\lib
+         :VCEnd
+         已复制         1 个文件。
+       FinalizeBuildStatus:
+         正在删除文件“..\build\NER\Debug\NER.unsuccessfulbuild”。
+         正在对“..\build\NER\Debug\NER.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“D:\NER\win32\NER.vcxproj”(rebuild 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:18.17
