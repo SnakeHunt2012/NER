@@ -58,44 +58,54 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 	int k = 0;
 	char *CStr;
 	Cmodel->pCRFModel->clear(); 
+
+	Cmodel->pCRFModel->add("哈尔滨 ns");
+	Cmodel->pCRFModel->add("工业 n");
+	Cmodel->pCRFModel->add("大学 n");
+	Cmodel->pCRFModel->add("是 v");
+	Cmodel->pCRFModel->add("北京 ns");
+	Cmodel->pCRFModel->add("大学生 n");
+	Cmodel->pCRFModel->add("交响乐团 n");
+	Cmodel->pCRFModel->add("。 wp");
+
+	/*
 	
+	// 格式化送入CRF++
 	while (i <= (int)strSen.length()) {
 		if (str_in[i] == L'/')
-			target[k][j++] =  L'\t';
+			target[k][j++] =  L' ';
 		else if (str_in[i] == L' ') {
 			target[k][j] = L'\0';
 
+			wcout << target[k] << endl;
+			// wchar_t 转 char
 			size_t len = wcslen(target[k]) + 1;
 			size_t converted = 0;
 			CStr=(char*)malloc(len*sizeof(char));
 			wcstombs_s(&converted, CStr, len, target[k++], _TRUNCATE);
 
 			Cmodel->pCRFModel->add(CStr);
-			wcout << target[k - 1] << endl;
+			cout << CStr << endl;
 			j = 0;
 		}
 		else 
 			target[k][j++] = str_in[i];
 		i++;
 	}
-
-	Cmodel->pCRFModel->parse();
-
-	for (size_t i = 0; i < Cmodel->pCRFModel->ysize(); ++i) {
-		std::cout << "tag " << i << " " << Cmodel->pCRFModel->yname(i) << std::endl;
-	}
-
-	/* test
-
-	Cmodel->pCRFModel->clear(); 
-
-	Cmodel->pCRFModel->add("我 n");
-	Cmodel->pCRFModel->add("是 v");
-	Cmodel->pCRFModel->add("谁 n");
-
-	Cmodel->pCRFModel->parse();
-
-	cout << Cmodel->pCRFModel->y2(1) << endl;
-	cout << Cmodel->pCRFModel->y2(2) << endl;
 	*/
+
+	if (!Cmodel->pCRFModel->parse())
+		cout << "Parse Error!!!" << endl;
+
+	cout << "size: " << Cmodel->pCRFModel->size() << endl;
+
+	for (i = 0; i < Cmodel->pCRFModel->size(); ++i) {
+		cout << i << ": ";
+		for (j = 0; j < Cmodel->pCRFModel->xsize(); ++j) {
+			cout << Cmodel->pCRFModel->x(i, j) << '\t';
+		}
+		cout << Cmodel->pCRFModel->y2(i) << '\t';
+		cout << endl;
+  }
+
 }
