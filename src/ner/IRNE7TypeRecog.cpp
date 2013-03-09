@@ -59,46 +59,33 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 	char *CStr;
 	Cmodel->pCRFModel->clear(); 
 
-	Cmodel->pCRFModel->add("哈尔滨 ns");
-	Cmodel->pCRFModel->add("工业 n");
-	Cmodel->pCRFModel->add("大学 n");
-	Cmodel->pCRFModel->add("是 v");
-	Cmodel->pCRFModel->add("北京 ns");
-	Cmodel->pCRFModel->add("大学生 n");
-	Cmodel->pCRFModel->add("交响乐团 n");
-	Cmodel->pCRFModel->add("。 wp");
-
-	/*
 	
 	// 格式化送入CRF++
+	DWORD n;
 	while (i <= (int)strSen.length()) {
 		if (str_in[i] == L'/')
 			target[k][j++] =  L' ';
 		else if (str_in[i] == L' ') {
 			target[k][j] = L'\0';
-
-			wcout << target[k] << endl;
-			// wchar_t 转 char
-			size_t len = wcslen(target[k]) + 1;
-			size_t converted = 0;
-			CStr=(char*)malloc(len*sizeof(char));
-			wcstombs_s(&converted, CStr, len, target[k++], _TRUNCATE);
+			n=WideCharToMultiByte(CP_OEMCP,NULL, target[k],-1,NULL,0,NULL,FALSE);
+			char *CStr=new char[n];
+			WideCharToMultiByte(CP_OEMCP,NULL, target[k],-1, CStr,n,NULL,FALSE);
 
 			Cmodel->pCRFModel->add(CStr);
-			cout << CStr << endl;
+			delete [] CStr;
 			j = 0;
 		}
 		else 
 			target[k][j++] = str_in[i];
 		i++;
 	}
-	*/
 
 	if (!Cmodel->pCRFModel->parse())
 		cout << "Parse Error!!!" << endl;
 
 	cout << "size: " << Cmodel->pCRFModel->size() << endl;
 
+	/* debug: CRF++的处理结果
 	for (i = 0; i < Cmodel->pCRFModel->size(); ++i) {
 		cout << i << ": ";
 		for (j = 0; j < Cmodel->pCRFModel->xsize(); ++j) {
@@ -106,6 +93,110 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 		}
 		cout << Cmodel->pCRFModel->y2(i) << '\t';
 		cout << endl;
-  }
+	}
+	*/
+
+
+	// CRF++输出格式化
+	char result[1024];
+	j = 0;
+	for(i = 0; i < Cmodel->pCRFModel->size(); ++i) {
+
+
+			if (*(Cmodel->pCRFModel->y2(i)) == 'B') {
+
+					result[j++] = '[';
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 0) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 0) + k);
+						k++;
+					}
+					result[j++] = '/';
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 1) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 1) + k);
+						k++;
+					}
+					result[j++] = ' ';
+
+			} else if (*(Cmodel->pCRFModel->y2(i)) == 'I') {
+
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 0) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 0) + k);
+						k++;
+					}
+					result[j++] = '/';
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 1) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 1) + k);
+						k++;
+					}
+					result[j++] = ' ';
+
+			} else if (*(Cmodel->pCRFModel->y2(i)) == 'E') {
+
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 0) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 0) + k);
+						k++;
+					}
+					result[j++] = '/';
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 1) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 1) + k);
+						k++;
+					}
+					result[j++] = ']';
+					k = 2;
+					while(*(Cmodel->pCRFModel->y2(i) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->y2(i) + k);
+						k++;
+					}
+					result[j++] = ' ';
+
+			} else if (*(Cmodel->pCRFModel->y2(i)) == 'S') {
+
+					result[j++] = '[';
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 0) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 0) + k);
+						k++;
+					}
+					result[j++] = '/';
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 1) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 1) + k);
+						k++;
+					}
+					result[j++] = ']';
+					k = 2;
+					while(*(Cmodel->pCRFModel->y2(i) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->y2(i) + k);
+						k++;
+					}
+					result[j++] = ' ';
+
+			} else if (*(Cmodel->pCRFModel->y2(i)) == 'O') {
+
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 0) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 0) + k);
+						k++;
+					}
+					result[j++] = '/';
+					k = 0;
+					while(*(Cmodel->pCRFModel->x(i, 1) + k) != '\0') {
+						result[j++] = *(Cmodel->pCRFModel->x(i, 1) + k);
+						k++;
+					}
+					result[j++] = ' ';
+
+			}
+	}
+	result[j] = '\0';
+	cout << result << endl;
+
+	// char 转 wchar_t
 
 }
