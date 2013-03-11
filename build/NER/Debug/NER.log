@@ -1,9 +1,9 @@
-﻿生成启动时间为 2013/3/11 16:03:13。
+﻿生成启动时间为 2013/3/11 16:13:19。
      1>项目“D:\NER\win32\NER.vcxproj”在节点 2 上(rebuild 个目标)。
      1>_PrepareForClean:
          正在删除文件“..\build\NER\Debug\NER.lastbuildstate”。
        InitializeBuildStatus:
-         正在创建“..\build\NER\Debug\NER.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
+         正在对“..\build\NER\Debug\NER.unsuccessfulbuild”执行 Touch 任务。
        ClCompile:
          d:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\src /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D _CRT_SECURE_NO_DEPRECATE /D _VC80_UPGRADE=0x0710 /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"..\build\NER\Debug\\" /Fd"..\build\NER\Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt ..\src\ner\IRNE7TypeRecog.cpp ..\src\ner\Model.cpp ..\src\ner\NER_DLL.cpp
          NER_DLL.cpp
@@ -28,4 +28,4 @@
 
 生成成功。
 
-已用时间 00:00:03.41
+已用时间 00:00:02.71
