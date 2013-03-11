@@ -40,12 +40,12 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 	// 先输出些什么
 	wchar_t* str_in = new wchar_t[strSen.length() + 1];
 	wcscpy(str_in,strSen.c_str());
-	wcout << str_in << endl;
+	//wcout << str_in << endl;
 
 	StrOut = L"输出";
 	wchar_t* str_out = new wchar_t[StrOut.length() + 1];
 	wcscpy(str_out,StrOut.c_str());
-	wcout << str_out << endl;
+	//wcout << str_out << endl;
 
 	//for (int i = 0; i < strSen.length(); ++i) {
 		//wcout << str_in[i] << endl;
@@ -83,7 +83,7 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 	if (!Cmodel->pCRFModel->parse())
 		cout << "Parse Error!!!" << endl;
 
-	cout << "size: " << Cmodel->pCRFModel->size() << endl;
+	//cout << "size: " << Cmodel->pCRFModel->size() << endl;
 
 	/* debug: CRF++的处理结果
 	for (i = 0; i < Cmodel->pCRFModel->size(); ++i) {
@@ -195,7 +195,7 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 			}
 	}
 	result[j] = '\0';
-	cout << result << endl;
+	//cout << result << endl;
 
 	// char 转 wchar_t
 	size_t len = strlen(result) + 1;
@@ -203,12 +203,12 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 	wchar_t *WStr;
 	WStr = (wchar_t *)malloc(len * sizeof(wchar_t));
 	mbstowcs_s(&converted, WStr, len, result, _TRUNCATE);
-	wcout << WStr << endl;
+	//wcout << WStr << endl;
 
 	// wchar_t[] 转 wstring
 	StrOut.assign(WStr);
 
-	wcout << StrOut << endl;
+	//wcout << StrOut << endl;
 
 	return;
 }
