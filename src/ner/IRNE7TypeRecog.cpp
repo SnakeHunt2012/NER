@@ -198,5 +198,10 @@ void IRNErecog::IRNE7TypeRecog(const wstring& strSen, wstring& StrOut, int tagFo
 	cout << result << endl;
 
 	// char ת wchar_t
-
+	size_t len = strlen(result) + 1;
+	size_t converted = 0;
+	wchar_t *WStr;
+	WStr = (wchar_t *)malloc(len * sizeof(wchar_t));
+	mbstowcs_s(&converted, WStr, len, result, _TRUNCATE);
+	wcout << WStr << endl;
 }
